@@ -37,18 +37,18 @@ export default function Navbar() {
                   <>
                     <Link to="/dashboard?tab=watch" className={`transition-colors flex items-center gap-1.5 ${isWatchActive ? 'text-blue-400 font-bold' : 'text-gray-400 hover:text-blue-400'}`}>
                       <Tv className="w-4 h-4" />
-                      <span>Watch</span>
+                      <span>{t('watch')}</span>
                     </Link>
                     <Link to="/dashboard?tab=profile" className={`transition-colors flex items-center gap-1.5 ${isProfileActive ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-purple-400'}`}>
                       <User className="w-4 h-4" />
-                      <span>Profile</span>
+                      <span>{t('profile')}</span>
                     </Link>
                   </>
                 )}
                 {userData.isAdmin && (
                   <Link to="/admin" className={`transition-colors flex items-center gap-1.5 ${isAdminRoute ? 'text-pink-400 font-bold' : 'text-gray-400 hover:text-pink-400'}`}>
                     <Shield className="w-4 h-4" />
-                    <span>Admin</span>
+                    <span>{t('admin')}</span>
                   </Link>
                 )}
                 <button 
@@ -87,23 +87,23 @@ export default function Navbar() {
             <>
               <Link to="/dashboard?tab=watch" className={`flex flex-col items-center gap-1 flex-1 ${isWatchActive ? 'text-blue-400' : 'text-gray-500 hover:text-gray-300'}`}>
                 <Tv className="w-5 h-5" />
-                <span className="text-[10px] uppercase font-bold tracking-wider">Watch</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider">{t('watch')}</span>
               </Link>
               <Link to="/dashboard?tab=profile" className={`flex flex-col items-center gap-1 flex-1 ${isProfileActive ? 'text-purple-400' : 'text-gray-500 hover:text-gray-300'}`}>
                 <User className="w-5 h-5" />
-                <span className="text-[10px] uppercase font-bold tracking-wider">Profile</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider">{t('profile')}</span>
               </Link>
             </>
           )}
           {userData.isAdmin && (
             <Link to="/admin" className={`flex flex-col items-center gap-1 flex-1 ${isAdminRoute ? 'text-pink-400' : 'text-gray-500 hover:text-gray-300'}`}>
               <Shield className="w-5 h-5" />
-              <span className="text-[10px] uppercase font-bold tracking-wider">Admin</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider">{t('admin')}</span>
             </Link>
           )}
           <button onClick={logOut} className="flex flex-col items-center gap-1 flex-1 text-gray-500 hover:text-red-400">
             <LogOut className="w-5 h-5" />
-            <span className="text-[10px] uppercase font-bold tracking-wider">Logout</span>
+            <span className="text-[10px] uppercase font-bold tracking-wider">{t('logout')}</span>
           </button>
         </div>
       )}

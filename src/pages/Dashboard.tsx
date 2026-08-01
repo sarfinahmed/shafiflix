@@ -5,7 +5,7 @@ import { useToast } from '../contexts/ToastContext';
 import { db } from '../lib/firebase';
 import { collection, query, where, getDocs, doc, getDoc, Timestamp } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'motion/react';
-import { Lock, AlertTriangle, Clock, X, ExternalLink, Play, Tv, User, Smartphone, Monitor, Globe, Search, Heart, Copy, Check, Bell, ShieldCheck, Sparkles, Filter } from 'lucide-react';
+import { Lock, AlertTriangle, Clock, X, ExternalLink, Play, Tv, User, Smartphone, Monitor, Globe, Search, Heart, Copy, Check, Bell, ShieldCheck, Sparkles, Filter, Info, ChevronRight } from 'lucide-react';
 import { safeToDate, safeFormatDistanceToNow } from '../lib/dateUtils';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
@@ -300,12 +300,12 @@ export default function Dashboard() {
           <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-xl border border-white/10">
             <div className={`w-2 h-2 rounded-full ${systemStatus?.isOnline !== false ? 'bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]' : 'bg-red-500'}`} />
             <span className="text-xs font-bold text-gray-300">
-              {systemStatus?.statusText || 'All Systems Operational'}
+              {systemStatus?.statusText || t('systemOperational')}
             </span>
           </div>
 
           <div className="hidden md:flex items-center gap-1.5 text-xs text-gray-400">
-            <span>Detected Device Mode:</span>
+            <span>Device Mode:</span>
             <span className="px-2 py-0.5 bg-purple-500/10 text-purple-400 rounded border border-purple-500/20 font-bold uppercase text-[10px]">
               {selectedDevice}
             </span>
@@ -320,7 +320,7 @@ export default function Dashboard() {
             }`}
           >
             <Tv className="w-4 h-4" />
-            <span>Watch ({products.length})</span>
+            <span>{t('watch')} ({products.length})</span>
           </button>
           <button
             onClick={() => handleTabChange('profile')}
@@ -329,7 +329,7 @@ export default function Dashboard() {
             }`}
           >
             <User className="w-4 h-4" />
-            <span>Profile</span>
+            <span>{t('profile')}</span>
           </button>
         </div>
       </div>
@@ -410,7 +410,7 @@ export default function Dashboard() {
                           className="w-full p-4 bg-black/60 border border-purple-500/30 rounded-xl flex flex-col items-center gap-3 text-center"
                         >
                           <div className="w-full p-3 bg-purple-950/30 border border-purple-500/20 rounded-lg">
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-purple-300 block mb-1">Active Subscription Token</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-purple-300 block mb-1">{t('activeTokenLabel')}</span>
                             <p className="text-xl md:text-2xl font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 break-all select-text">
                               {token.tokenValue}
                             </p>
@@ -421,7 +421,7 @@ export default function Dashboard() {
                             className="w-full py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer"
                           >
                             {tokenCopied ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
-                            <span>{tokenCopied ? 'Token Copied!' : 'Copy Subscription Token'}</span>
+                            <span>{tokenCopied ? t('tokenCopied') : t('copyToken')}</span>
                           </button>
                         </motion.div>
                       )}
@@ -434,12 +434,12 @@ export default function Dashboard() {
 
           <aside className="w-full lg:w-72 bg-[#0c0c14] border border-white/5 rounded-2xl p-6 flex flex-col h-fit">
             <div className="mb-8">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Current Subscription</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">{t('currentSubscription')}</h3>
               <div className="p-4 bg-white/5 rounded-xl border border-white/10">
                 <div className={`text-2xl font-mono font-bold mb-1 ${isExpired ? 'text-red-400' : 'text-blue-400'}`}>
-                  {isExpired ? 'Expired' : safeFormatDistanceToNow(token?.expiresAt, 'Expired')}
+                  {isExpired ? t('expired') : safeFormatDistanceToNow(token?.expiresAt, t('expired'))}
                 </div>
-                <div className="text-[10px] text-gray-400 uppercase">Time Remaining until Expiry</div>
+                <div className="text-[10px] text-gray-400 uppercase">{t('timeRemaining')}</div>
                 {!isExpired && (
                   <div className="w-full bg-white/10 h-1.5 mt-4 rounded-full overflow-hidden">
                     <div className="bg-blue-400 h-full w-2/3 shadow-[0_0_10px_#60a5fa] animate-pulse"></div>
@@ -449,19 +449,19 @@ export default function Dashboard() {
             </div>
 
             <div className="mb-8">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Security Status</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">{t('securityStatus')}</h3>
               <ul className="space-y-4">
                 <li className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Profile Status</span>
-                  <span className="text-green-500 font-bold">VERIFIED</span>
+                  <span className="text-gray-400">{t('profileStatus')}</span>
+                  <span className="text-green-500 font-bold">{t('verified')}</span>
                 </li>
                 <li className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Copy Protection</span>
-                  <span className="text-blue-500 font-bold">ARMED</span>
+                  <span className="text-gray-400">{t('copyProtection')}</span>
+                  <span className="text-blue-500 font-bold">{t('armed')}</span>
                 </li>
                 <li className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Device Link</span>
-                  <span className="text-gray-500">ACTIVE</span>
+                  <span className="text-gray-400">{t('deviceLink')}</span>
+                  <span className="text-gray-500">{t('active')}</span>
                 </li>
               </ul>
             </div>
@@ -469,13 +469,13 @@ export default function Dashboard() {
             <div className="mt-auto">
               <div className="p-4 border border-dashed border-white/20 rounded-xl">
                 <p className="text-[11px] text-gray-500 leading-relaxed italic">
-                  "Tokens are unique and bound to this hardware. Any attempt to replicate or share access keys will result in permanent suspension."
+                  "{t('securityNote')}"
                 </p>
                 <div className="mt-3 flex items-center gap-2">
                   <div className="w-4 h-4 rounded-full border border-blue-500 flex items-center justify-center">
                     <span className="text-[8px] text-blue-500 italic">i</span>
                   </div>
-                  <span className="text-[10px] font-bold uppercase text-blue-400">Security Policy v2.4</span>
+                  <span className="text-[10px] font-bold uppercase text-blue-400">Security Policy</span>
                 </div>
               </div>
             </div>
@@ -494,7 +494,7 @@ export default function Dashboard() {
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Search movies, TV, channels..."
+                placeholder={t('searchPlaceholder')}
                 className="w-full pl-9 pr-4 py-2 bg-[#11111d] border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -506,7 +506,7 @@ export default function Dashboard() {
                   categoryFilter === 'all' ? 'bg-blue-600 text-white shadow' : 'bg-white/5 text-gray-400 hover:text-white'
                 }`}
               >
-                All Content
+                {t('allContent')}
               </button>
               <button
                 onClick={() => setCategoryFilter('favorites')}
@@ -515,7 +515,7 @@ export default function Dashboard() {
                 }`}
               >
                 <Heart className="w-3.5 h-3.5 fill-current" />
-                <span>Favorites ({favorites.length})</span>
+                <span>{t('favorites')} ({favorites.length})</span>
               </button>
               <button
                 onClick={() => setCategoryFilter('mobile')}
@@ -524,7 +524,7 @@ export default function Dashboard() {
                 }`}
               >
                 <Smartphone className="w-3.5 h-3.5" />
-                <span>Mobile</span>
+                <span>{t('mobile')}</span>
               </button>
               <button
                 onClick={() => setCategoryFilter('pc')}
@@ -533,7 +533,7 @@ export default function Dashboard() {
                 }`}
               >
                 <Monitor className="w-3.5 h-3.5" />
-                <span>PC Link</span>
+                <span>{t('pcLink')}</span>
               </button>
               <button
                 onClick={() => setCategoryFilter('tv')}
@@ -542,7 +542,7 @@ export default function Dashboard() {
                 }`}
               >
                 <Tv className="w-3.5 h-3.5" />
-                <span>Smart TV</span>
+                <span>{t('smartTv')}</span>
               </button>
             </div>
           </div>
@@ -550,15 +550,14 @@ export default function Dashboard() {
           {isExpired ? (
             <div className="text-center p-12 bg-[#11111d] border border-red-500/20 rounded-2xl text-red-500 shadow-md">
               <AlertTriangle className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <h3 className="text-xl font-bold uppercase tracking-widest mb-2">Access Denied</h3>
-              <p className="text-sm">Your subscription has expired. Please renew your token to access content.</p>
+              <h3 className="text-xl font-bold uppercase tracking-widest mb-2">{t('accessDenied')}</h3>
+              <p className="text-sm">{t('accessExpiredMsg')}</p>
             </div>
           ) : filteredProducts.length > 0 ? (
             <div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map(product => {
                   const isFav = favorites.includes(product.id);
-                  const activeTargetUrl = getDeviceLink(product, selectedDevice);
 
                   return (
                     <motion.div 
@@ -606,25 +605,17 @@ export default function Dashboard() {
                         <div className="pt-3 border-t border-white/5 flex items-center justify-between gap-2 text-xs">
                           <button
                             type="button"
-                            onClick={(e) => handleQuickCopyLink(e, getDeviceLink(product, selectedDevice))}
-                            className="p-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 rounded-lg transition-colors flex items-center gap-1 text-[11px] border border-purple-500/20"
-                            title="Copy Stream URL"
-                          >
-                            <Copy className="w-3.5 h-3.5" />
-                            <span>Copy Link</span>
-                          </button>
-
-                          <button
-                            type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              const targetUrl = getDeviceLink(product, selectedDevice);
-                              handleOpenDirectInEdge(targetUrl, openInEdge);
+                              setSelectedProduct(product);
                             }}
-                            className="text-blue-400 font-bold uppercase tracking-wider text-[11px] flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                            className="w-full py-2.5 px-3 bg-gradient-to-r from-blue-600/15 to-purple-600/15 hover:from-blue-600/25 hover:to-purple-600/25 text-blue-300 border border-blue-500/20 rounded-xl font-medium text-xs flex items-center justify-between transition-all group-hover:border-blue-500/40 cursor-pointer shadow-sm"
                           >
-                            <span>Watch Stream</span>
-                            <ExternalLink className="w-3.5 h-3.5" />
+                            <span className="flex items-center gap-1.5 font-semibold">
+                              <Info className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                              <span>{t('viewRulesAndLink')}</span>
+                            </span>
+                            <ChevronRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform shrink-0" />
                           </button>
                         </div>
                       </div>
@@ -635,7 +626,7 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="text-center p-12 bg-[#11111d] border border-white/5 rounded-2xl text-gray-500 shadow-md">
-              No content matches your search or filter.
+              {t('noContentFound')}
             </div>
           )}
         </div>
@@ -677,7 +668,7 @@ export default function Dashboard() {
                 
                 {selectedProduct.description && (
                   <div className="mb-6 max-w-full overflow-hidden">
-                    <h4 className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2">Description</h4>
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2">{t('description')}</h4>
                     <p className="text-gray-300 leading-relaxed whitespace-pre-wrap break-words">{selectedProduct.description}</p>
                   </div>
                 )}
@@ -685,7 +676,7 @@ export default function Dashboard() {
                 {selectedProduct.rules && (
                   <div className="mb-6 p-4 bg-red-950/20 border border-red-500/20 rounded-xl max-w-full overflow-hidden">
                     <h4 className="text-xs font-bold uppercase tracking-widest text-red-400 mb-2 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4" /> Important Rules
+                      <AlertTriangle className="w-4 h-4" /> {t('importantRules')}
                     </h4>
                     <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap break-words">{selectedProduct.rules}</p>
                   </div>
@@ -694,7 +685,7 @@ export default function Dashboard() {
                 {/* Device Selector */}
                 <div className="mb-6 p-4 bg-[#11111d] border border-white/5 rounded-xl max-w-full overflow-hidden">
                   <h4 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3 flex items-center gap-1.5">
-                    <span>Select Device Mode:</span>
+                    <span>{t('selectDeviceMode')}</span>
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     <button
@@ -703,7 +694,7 @@ export default function Dashboard() {
                       className={`p-2.5 rounded-lg border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedDevice === 'default' ? 'bg-blue-600/20 border-blue-500 text-blue-400' : 'bg-black/30 border-white/5 text-gray-400 hover:text-white'}`}
                     >
                       <Globe className="w-3.5 h-3.5" />
-                      <span>Default</span>
+                      <span>{t('defaultMode')}</span>
                     </button>
                     <button
                       type="button"
@@ -711,7 +702,7 @@ export default function Dashboard() {
                       className={`p-2.5 rounded-lg border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedDevice === 'mobile' ? 'bg-purple-600/20 border-purple-500 text-purple-400' : 'bg-black/30 border-white/5 text-gray-400 hover:text-white'}`}
                     >
                       <Smartphone className="w-3.5 h-3.5" />
-                      <span>Mobile</span>
+                      <span>{t('mobile')}</span>
                     </button>
                     <button
                       type="button"
@@ -719,7 +710,7 @@ export default function Dashboard() {
                       className={`p-2.5 rounded-lg border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedDevice === 'pc' ? 'bg-emerald-600/20 border-emerald-500 text-emerald-400' : 'bg-black/30 border-white/5 text-gray-400 hover:text-white'}`}
                     >
                       <Monitor className="w-3.5 h-3.5" />
-                      <span>PC / Laptop</span>
+                      <span>{t('pcLaptopMode')}</span>
                     </button>
                     <button
                       type="button"
@@ -727,14 +718,14 @@ export default function Dashboard() {
                       className={`p-2.5 rounded-lg border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedDevice === 'tv' ? 'bg-amber-600/20 border-amber-500 text-amber-400' : 'bg-black/30 border-white/5 text-gray-400 hover:text-white'}`}
                     >
                       <Tv className="w-3.5 h-3.5" />
-                      <span>Smart TV</span>
+                      <span>{t('smartTv')}</span>
                     </button>
                   </div>
                   <p className="text-[11px] text-gray-400 mt-2.5 italic flex items-center gap-1 truncate max-w-full">
-                    <span>Target link:</span>
+                    <span>{t('targetLink')}</span>
                     <span className="font-bold text-white uppercase">{selectedDevice}</span>
                     {getDeviceLink(selectedProduct, selectedDevice) !== selectedProduct.targetUrl && (
-                      <span className="text-purple-400 font-normal truncate">(Device specific link active)</span>
+                      <span className="text-purple-400 font-normal truncate">{t('deviceSpecificActive')}</span>
                     )}
                   </p>
                 </div>
@@ -751,9 +742,9 @@ export default function Dashboard() {
                     <div className="flex flex-col">
                       <span className="text-xs font-bold text-blue-300 uppercase tracking-wider flex items-center gap-1.5">
                         <Globe className="w-3.5 h-3.5" />
-                        <span>Open in Microsoft Edge App</span>
+                        <span>{t('openInEdgeLabel')}</span>
                       </span>
-                      <span className="text-[11px] text-gray-400">Launches Windows Microsoft Edge browser directly</span>
+                      <span className="text-[11px] text-gray-400">{t('openInEdgeSubtitle')}</span>
                     </div>
                   </label>
 
@@ -763,7 +754,7 @@ export default function Dashboard() {
                     className="w-full px-5 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] flex items-center justify-center gap-2"
                   >
                     <ExternalLink className="w-4 h-4" />
-                    <span>{openInEdge ? 'Launch in Microsoft Edge' : 'Open Stream Link'}</span>
+                    <span>{openInEdge ? t('launchInEdge') : t('openStreamLink')}</span>
                   </button>
                 </div>
               </div>

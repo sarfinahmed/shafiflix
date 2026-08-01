@@ -84,7 +84,7 @@ export default function Login() {
             {t('welcome')}
           </h1>
           <p className="text-gray-400 text-[11px] sm:text-xs italic">
-            Experience cinematic access. Secure & dynamic.
+            {t('loginSubtitle')}
           </p>
         </div>
         
@@ -97,7 +97,7 @@ export default function Login() {
           )}
           
           <div>
-            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">User ID (Email)</label>
+            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">{t('userIdLabel')}</label>
             <div className="relative">
               <Mail className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input 
@@ -106,13 +106,13 @@ export default function Login() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 className="w-full bg-[#050508] border border-white/10 rounded-lg pl-8 pr-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
-                placeholder="Enter your ID"
+                placeholder={t('userIdPlaceholder')}
               />
             </div>
           </div>
           
           <div>
-            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Access Token</label>
+            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">{t('accessTokenLabel')}</label>
             <div className="relative">
               <Key className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input 
@@ -120,7 +120,7 @@ export default function Login() {
                 value={token}
                 onChange={e => setToken(e.target.value)}
                 className="w-full bg-[#050508] border border-white/10 rounded-lg pl-8 pr-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-purple-500 transition-colors font-mono"
-                placeholder="SFX-XXXX-XXXX"
+                placeholder={t('tokenPlaceholder')}
               />
             </div>
           </div>
@@ -133,11 +133,11 @@ export default function Login() {
             <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg opacity-90 group-hover:opacity-100 transition-opacity" />
             <div className="relative bg-[#050508] px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors group-hover:bg-[#0c0c14]">
               {loading ? (
-                <span className="text-white text-xs font-bold tracking-widest uppercase animate-pulse">Verifying...</span>
+                <span className="text-white text-xs font-bold tracking-widest uppercase animate-pulse">{t('verifying')}</span>
               ) : (
                 <>
                   <Play className="w-3.5 h-3.5 text-blue-400 group-hover:text-purple-400 transition-colors" />
-                  <span className="text-white text-xs font-bold tracking-widest uppercase">Enter Vault</span>
+                  <span className="text-white text-xs font-bold tracking-widest uppercase">{t('enterVault')}</span>
                 </>
               )}
             </div>
@@ -150,7 +150,7 @@ export default function Login() {
             onClick={handleGoogleSignIn}
             className="text-[10px] text-gray-500 hover:text-blue-400 transition-colors uppercase tracking-wider"
           >
-            Google Admin Sign-In
+            {t('googleAdminSignIn')}
           </button>
         </div>
       </motion.div>
