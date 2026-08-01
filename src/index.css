@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon-blue: #3b82f6; /* blue-500 */
+  --color-neon-purple: #9333ea; /* purple-600 */
+  --color-neon-pink: #db2777; /* pink-600 */
+}
+
+body {
+  @apply bg-[#050508] text-gray-100 min-h-screen font-sans;
+  overflow-x: hidden;
+}
+
+/* Prevent selection globally unless explicitly allowed */
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Futuristic card glow hover */
+.neon-glow:hover {
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+}

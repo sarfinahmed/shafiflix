@@ -1,0 +1,71 @@
+{
+  "projectInfo": {
+    "name": "ShafiFlix",
+    "description": "Futuristic cinematic access token manager",
+    "architecture": "web"
+  },
+  "collections": [
+    {
+      "name": "users",
+      "description": "Stores user profiles and rules acceptance status",
+      "documents": [
+        {
+          "id": "user_id",
+          "fields": [
+            {
+              "name": "email",
+              "type": "string",
+              "description": "User email address"
+            },
+            {
+              "name": "isAdmin",
+              "type": "boolean",
+              "description": "Whether the user is an admin"
+            },
+            {
+              "name": "rulesAccepted",
+              "type": "boolean",
+              "description": "Whether the user accepted the rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tokens",
+      "description": "Stores access tokens assigned to users",
+      "documents": [
+        {
+          "id": "token_id",
+          "fields": [
+            {
+              "name": "tokenValue",
+              "type": "string",
+              "description": "The actual access token string"
+            },
+            {
+              "name": "assignedTo",
+              "type": "string",
+              "description": "Email address of the user assigned to this token"
+            },
+            {
+              "name": "createdAt",
+              "type": "timestamp",
+              "description": "When the token was generated"
+            },
+            {
+              "name": "expiresAt",
+              "type": "timestamp",
+              "description": "When the token expires"
+            },
+            {
+              "name": "durationDays",
+              "type": "number",
+              "description": "Duration in days"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
