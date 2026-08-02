@@ -31,7 +31,15 @@ export default function Login() {
       await signInWithGoogle();
     } catch (err: any) {
       if (err?.code !== 'auth/popup-closed-by-user') {
-        setError(err.message || 'Google Sign-In failed');
+        if (err?.code === 'auth/unauthorized-domain' || err?.message?.includes('unauthorized-domain')) {
+          setError(
+            "Firebase Error: unauthorized-domain. " +
+            "You added the domain to the 'shafiflix' project, but this app is configured to use the 'shafi-link' Firebase project. " +
+            "How to fix: In your Firebase Console, switch to the 'shafi-link' project, then go to Authentication -> Settings -> Authorized Domains and add 'shafiflix.netlify.app'."
+          );
+        } else {
+          setError(err.message || 'Google Sign-In failed');
+        }
       }
     }
   };
@@ -56,7 +64,15 @@ export default function Login() {
 
       await loginWithToken(email, token);
     } catch (err: any) {
-      setError(err.message || 'Invalid credentials or expired token');
+      if (err?.code === 'auth/unauthorized-domain' || err?.message?.includes('unauthorized-domain')) {
+        setError(
+          "Firebase Error: unauthorized-domain. " +
+          "You added the domain to the 'shafiflix' project, but this app is configured to use the 'shafi-link' Firebase project. " +
+          "How to fix: In your Firebase Console, switch to the 'shafi-link' project, then go to Authentication -> Settings -> Authorized Domains and add 'shafiflix.netlify.app'."
+        );
+      } else {
+        setError(err.message || 'Invalid credentials or expired token');
+      }
       setLoading(false);
     }
   };

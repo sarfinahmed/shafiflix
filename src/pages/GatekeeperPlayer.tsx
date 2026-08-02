@@ -38,7 +38,7 @@ export default function GatekeeperPlayer() {
   const [accessGranted, setAccessGranted] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState<'default' | 'mobile' | 'pc' | 'tv'>('default');
   const [openMode, setOpenMode] = useState<'iframe' | 'launch'>('iframe');
-  const [openInEdge, setOpenInEdge] = useState(true);
+  const [openInEdge, setOpenInEdge] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const toggleFullscreen = () => {
@@ -146,9 +146,9 @@ export default function GatekeeperPlayer() {
       url = `https://${url}`;
     }
 
-    const targetUri = useEdge ? `microsoft-edge:${url}` : url;
+    const targetUri = url;
 
-    showToast(useEdge ? 'Opening stream directly in Microsoft Edge...' : 'Opening stream in browser...', 'info');
+    showToast('Opening stream in browser...', 'info');
 
     const a = document.createElement('a');
     a.href = targetUri;

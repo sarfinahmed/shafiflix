@@ -55,7 +55,7 @@ export default function Dashboard() {
   const [selectedDevice, setSelectedDevice] = useState<'default' | 'mobile' | 'pc' | 'tv'>('default');
   const initialTab = searchParams.get('tab') === 'profile' ? 'profile' : 'watch';
   const [activeTab, setActiveTab] = useState<'watch' | 'profile'>(initialTab);
-  const [openInEdge, setOpenInEdge] = useState<boolean>(true);
+  const [openInEdge, setOpenInEdge] = useState<boolean>(false);
   const [tokenCopied, setTokenCopied] = useState<boolean>(false);
   
   // Dashboard Search, Filter & Favorites state
@@ -196,12 +196,11 @@ export default function Dashboard() {
 
   const handleOpenGatekeeperInEdge = (productId: string, device: string) => {
     const gkUrl = `${window.location.origin}/gatekeeper/${productId}?device=${device}`;
-    const edgeUri = `microsoft-edge:${gkUrl}`;
 
-    showToast('Launching Protected Gatekeeper Stream in Microsoft Edge...', 'info');
+    showToast('Launching Protected Gatekeeper Stream...', 'info');
 
     const a = document.createElement('a');
-    a.href = edgeUri;
+    a.href = gkUrl;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
     document.body.appendChild(a);
@@ -217,9 +216,9 @@ export default function Dashboard() {
     if (!url.includes('://') && !url.includes(':')) {
       url = `https://${url}`;
     }
-    const targetUri = useEdge ? `microsoft-edge:${url}` : url;
+    const targetUri = url;
 
-    showToast(useEdge ? 'Opening stream directly in Microsoft Edge...' : 'Opening stream URL in browser...', 'info');
+    showToast('Opening stream URL in browser...', 'info');
 
     const a = document.createElement('a');
     a.href = targetUri;
